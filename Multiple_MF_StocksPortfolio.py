@@ -33,6 +33,7 @@ soups = [soup_1,soup_2,soup_3,soup_4,soup_5]
 
 #Getting table from all URL with given ID and Storing it into List
 test_list=[]
+test_value=[]
 data_content=[]
 
 for x in soups:
@@ -41,9 +42,14 @@ for x in soups:
         rows= table.find_all('tr')
         for row in rows:
             new_table=row.find_all('td')[0].text.strip()
+            new_value=row.find_all('td')[4].text.strip()
             test_list += [new_table]
-            
-        data_content.append(test_list)
+            test_value += [new_value]
+            #print(new_table)
+            #print(new_value)
+        data_content.append(test_list )
+        data_content.append(test_value)
+        test_value=[]
         test_list=[]
 data_content
 
@@ -58,11 +64,11 @@ dataset
 #Dataframe Transpose
 dt = pd.DataFrame(dataset.T)
 #Adding Titles to New Dataframe
-dt.columns = [a,b,c,d,e]
+dt.columns = [a,"%holding",b,"%holding",c,"%holding",d,"%holding",e,"%holding"]
 dt
 
 #Saving Dataframe to Excel.
-writer = ExcelWriter('F:/New folder/PythonExport.xlsx')
+writer = ExcelWriter('./PythonExport.xlsx')
 dt.to_excel(writer,index = False, header=True)
-writer.save()
+writer._save()
 
